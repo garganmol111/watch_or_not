@@ -5,11 +5,42 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <html>
+
 	<head>
 		<title>Full Motion</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<div class="topnav">
+			<a class="active" href="#home">Home</a>
+			<?php 
+				session_start();
+				$loggedIn = $admin = FALSE;
+				if(isset($_SESSION['user_id'])) {
+					$loggedIn = TRUE;
+					if(isset($_SESSION['user_level'])) {
+						if($_SESSION['user_level']==1) {
+							$admin = TRUE;
+						}
+					}
+				}
+				
+			?>
+			<?php if(!$loggedIn) { ?>
+				
+					<a href="/reg_login/login.php">Log In</a>
+					<a href="/reg_login/register.php">Register</a>
+			<?php } ?>
+			
+			<span class="topnavleft">
+				Welcome <?php
+							echo isset($_SESSION['full_name'])?' '.$_SESSION['full_name']:'  guest'; 
+						?>
+			</span>	
+			<?php if($loggedIn) { ?>
+				<a class="topnavleft" href="/reg_login/logout.php">Logout</a>
+			<?php } ?>
+		</div> 
 	</head>
 	<body id="top">
 
@@ -32,50 +63,47 @@
 				</section>
 
 			<!-- Main -->
-				<div id="main">
+			<div id="main">
 					<div class="inner">
 
 						<div class="thumbnails">
 
-							<div class="box">
-								<a href="https://www.youtube.com/watch?v=YoHD9XEInc0" class="image fit"><img src="images/pic01.jpg" alt="" /></a>
-								<div class="inner">
-									<h3>INCEPTION</h3>
-									<p>A thief who steals corporate secrets through use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.</p>
-									<a href="https://youtu.be/YoHD9XEInc0" class="button fit" data-poptrox="youtube,800x400">Watch trailer</a>
-									<button class="btnwatch">Watch</button>
-									<button class="btnnot">Not</button>
+						<?php
+							include "./reg_login/includes/mysql_connection_link.php";
+							
+							$query = mysqli_query($dbcl, "SELECT * from movies limit 25");
+							if(mysqli_num_rows($query)) {
+								$num_iterations = 0;
+								$count = 1;
+								$str='';
+								while($row = mysqli_fetch_array($query)) {
+									$img_url = $row['img_url'];
+									$m_name = $row['m_name'];
+									$year = $row['year'];
+									$rating = $row['rating'];
+									$genre = $row['genre'];
+									$runtime = $row['duration'];
+									$description = $row['description'];
+									$director = $row['director'];
+									$cast = $row['cast'];
+									$str .= "<div class='box'>
+												<img class='image fit' src='$img_url' alt='' />
+												<div class='inner'>
+													<h3>$m_name ($year)</h3>
+													<h4><u>Rating:</u> $rating</p>
+													<p><u>Genre:</u> $genre</p>
+													<p><u>Runtime:</u> $runtime</p>
+													<p>$description</p>
+													<p><u>Directed By:</u> $director</p>
+													<p><u>Cast:</u> $cast</p>
+													<button class='btnwatch'>Watch</button>
+												</div>
+											</div>";
+								}
+								echo $str;
+							}
 
-
-								</div>
-							</div>
-
-							<div class="box">
-								<a href="https://youtu.be/s6zR2T9vn2c" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-								<div class="inner">
-									<h3>The Shawshank Redemption</h3>
-									<p>Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.</p>
-									<a href="https://youtu.be/6hB3S9bIaco" class="button style2 fit" data-poptrox="youtube,800x400">Watch trailer</a>
-									<button class="btnwatch">Watch</button>
-									<button class="btnnot">Not</button>
-								</div>
-							</div>
-
-							<div class="box">
-								<a href="https://youtu.be/x_7YlGv9u1g" class="image fit"><img src="images/pic03.jpg" alt="" /></a>
-								<div class="inner">
-									<h3>Dangal</h3>
-									<p>Biographical sports drama on former wrestler Mahavir Singh Phogat and his two wrestler daughters' struggle towards glory at the Commonwealth Games in the face of societal oppression.</p>
-									<a href="https://youtu.be/x_7YlGv9u1g" class="button style3 fit" data-poptrox="youtube,800x400">Watch trailer</a>
-									<button class="btnwatch">Watch</button>
-									<button class="btnnot">Not</button>
-								</div>
-							</div>
-
-
-
-
-
+						?>					
 						</div>
 
 					</div>

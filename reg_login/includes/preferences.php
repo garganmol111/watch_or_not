@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-define('BASE_URL', 'http://localhost/reg_login/');
+define('BASE_URL', 'http://localhost/');
 define('MYSQL', './includes/mysql_connection_link.php');
 define('HEADER', './includes/header.php');
 define('FOOTER', './includes/footer.php');

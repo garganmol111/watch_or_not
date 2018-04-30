@@ -22,7 +22,7 @@ if(filter_input(INPUT_POST, 'login')){
     $pass = $dbcl->real_escape_string($safePOST['password']);
     $valid = TRUE;
     $query = "SELECT AES_DECRYPT(pin,salt), active, user_level, user_id,"
-            ." CONCAT_WS('', first_name, last_name) FROM users WHERE";
+            ." CONCAT_WS('', first_name, ' ', last_name) FROM users WHERE";
     if(filter_var($id, FILTER_VALIDATE_EMAIL) && strlen($id)<=80){
         $query .=" email = ? limit 1";
     }else if(between($id, 5, 50)) {

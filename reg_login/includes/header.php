@@ -22,7 +22,8 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title><?php echo $page_title; ?></title>
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href
+              ="css/style.css" />
     </head>
     <body>
         <header>
@@ -31,7 +32,7 @@ and open the template in the editor.
             <nav>
                 <ul>
                     <li>
-                        <a href="ïndex.php">Home</a>
+                        <a href="../../index.php">Home</a>
                     </li>
                     <?php if($loggedIn) { 
                         if($admin) { ?>
@@ -51,6 +52,9 @@ and open the template in the editor.
                     </li>
                     <li>
                         <a href="login.php">Login</a>
+                    </li>
+                    <li>
+                        <a href="activate.php">Activate</a>
                     </li>
                     <?php } ?>
                 </ul>
